@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+	<head>
+    <link rel="stylesheet" href="/css/style.css?<?php echo(time());?>">
+    <link rel="stylesheet" href="/css/animista.net.css?<?php echo(time());?>">
+    <link rel='stylesheet' href='https://animate.style/animate.min.css?<?php echo(time());?>'>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+    <title>No Hello</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta property="og:title" content="Nohello">
+    <meta property="og:description" content="Please just ask your question &#x1F616;">
+    <meta property="og:image" content="/images/favicon.png">
+	<meta name="theme-color" content="#ADD8E6">
+
+    <title>No Hello</title>
+    <style>
+        #title {
+            font-size: 3em;
+            font-weight: bold;
+            font-family: monospace;
+            text-align: center;
+            padding: 50px;
+            color: black;
+        }
+        body {  
+                background-image: url(/images/bg.png);
+          }
+    </style>
+</head>
+<body>
+    <div id="title"></div>
+    <script>
+        var phrases = ["No Hello", "No Hi.", "No Heya", "Just ask the question"];
+        var index = 0;
+        var deleting = false;   
+        var text = "";
+
+        function updateTitle() {
+            var title = document.getElementById("title");
+            if (deleting) {
+                text = text.substr(0, text.length - 1); 
+                title.innerHTML = text + "|"; 
+                if (text === "") {
+                    deleting = false;
+                    index = (index + 1) % phrases.length;
+                    setTimeout(updateTitle, 1000);
+                } else {
+                    setTimeout(updateTitle, 50);
+                }
+            } else {
+                if (text === phrases[index]) {
+                    deleting = true;
+                    setTimeout(updateTitle, 1000);
+                } else {
+                    text = phrases[index].substr(0, text.length + 1);
+                    title.innerHTML = text + "|";
+                    setTimeout(updateTitle, 100);
+                }
+            }
+        }
+
+        updateTitle();
+    </script>
+
+</head>
+<div class="nav-links-index">
+    <span>www.nohello.at</span><br> 
+    <span>Zamiast pisać w taki sposób:</span><br>
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            ul {
+                list-style-position: inside;
+                padding-left: 20px;
+                line-height: 1.5;
+            }
+            .list-1 {
+                list-style-image: url('/images/cross.png');
+            }
+            .list-2 {
+                list-style-image: url('/images/check.png');
+            }
+        </style>
+    </head>
+    <body>
+        <ul class="list-1">
+            <li>"Siema, jesteś tutaj?"</li>
+            <li>"Hej kolego - szybkie pytanie."</li>
+            <li>"Jesteś?"</li>
+            <li>"ping."</li>
+            <li>itd...</li>
+        </ul>
+        
+        <span>Po prostu zadaj pytanie!</span><br>
+        <span>Spróbuj tak:</span><br>
+        <ul class="list-2">
+            <li>"Hej stary, co tam? Masz jakiś pomysł jak rozwiązać ten problem?"</li>
+            <li>"Cześć Stuffmaker, pomożesz mi z kodem HTML, jak będziesz mieć chwilę?"</li>
+            <li>"Hej, jeśli nie jesteś zajęty, możesz zaaktualizować te NFRs'y?"</li>
+            <li>itd...</li>
+        </ul>
+    </body>
+    </html>
+    
+
+</body>
+
+
+    <ul align="start">
+    </ul>
+    <a href="/languages">
+        <button>Languages</button>
+    </a>
+    <br>
+
+</body>
+</html>
