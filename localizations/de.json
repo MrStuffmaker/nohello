@@ -5,7 +5,9 @@
         { "type": "do", "text": "Schreibe: 'Hallo, ich habe eine Frage zu Ihrem Produkt.'" },
         { "type": "dont", "text": "Schreibe nicht: 'Hallo.'" },
         { "type": "do", "text": "Beginne direkt mit dem Kontext." },
-        { "type": "dont", "text": "Warte nicht auf eine Antwort, bevor du weiterschreibst." }
+        { "type": "dont", "text": "Warte nicht auf eine Antwort, bevor du weiterschreibst." },
+        { "type": "do", "text": "Gib klaren Kontext." },
+        { "type": "dont", "text": "Einfach nur Hallo sagen." }
     ],
 
 
