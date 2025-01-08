@@ -1,0 +1,25 @@
+{
+    "title": "Welkom bij NoHello",
+    "message": "Zeg alsjeblieft niet alleen hallo. Kom meteen ter zake!",
+    "examples": [
+        { "type": "do", "text": "Schrijf: 'Hoi, ik heb een vraag over jullie product.'" },
+        { "type": "dont", "text": "Schrijf niet: 'Hallo.'" },
+        { "type": "do", "text": "Begin direct met de context." },
+        { "type": "dont", "text": "Wacht niet op een antwoord om verder te gaan." }
+    ],
+    
+    "doHeader": "Effective Communication",
+    "dontHeader": "Ineffective Communication",
+    "doExample": [
+        { "sender": "user", "message": "Hi Alice, I'm having trouble with the latest deployment...", "time": "10:00 AM" },
+        { "sender": "alice", "message": "Of course, I'd be happy to help...", "time": "10:02 AM" },
+        { "sender": "user", "message": "Thanks for the help!", "time": "10:03 AM" }
+    ],
+    "dontExample": [
+        { "sender": "user", "message": "Hello", "time": "10:00 AM" },
+        { "sender": "alice", "message": "Hi", "time": "10:05 AM" },
+        { "sender": "user", "message": "Are you free now?", "time": "10:06 AM" },
+        { "sender": "alice", "message": "Yes, I'm free now.", "time": "10:07 AM" },
+        { "sender": "user", "message": "Nice, can you please help me with my deployment problem?", "time": "10:08 AM" }
+    ]
+}

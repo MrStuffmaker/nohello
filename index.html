@@ -1,15 +1,342 @@
-<html>
-
-	<head>
-    <link rel="stylesheet" href="/css/style.css?<?php echo(time());?>">
-    <link rel="stylesheet" href="/css/animista.net.css?<?php echo(time());?>">
-    <link rel='stylesheet' href='https://animate.style/animate.min.css?<?php echo(time());?>'>
-    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
-    <title>No Hello</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
-    <meta property="og:title" content="No hello">
-    <meta property="og:description" content="Dont send Hello in the chat and let the others wait. Please just ask your question &#x1F616;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoHello</title>
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <meta name="description" content="NoHello - Please don't just say hello. Learn how to communicate effectively and get straight to the point.">
+    <meta property="og:title" content="NoHello">
+    <meta property="og:description" content="Please don't just say hello. Learn how to communicate effectively and get straight to the point.">
     <meta property="og:image" content="/images/favicon.png">
-	<meta name="theme-color" content="#ADD8E6">
-<html>
-		<script>location.replace("/en")</script>
+    <meta property="og:url" content="https://nohello.at">
+    <meta name="twitter:card" content="summary_large_image">
+    <script>
+         const originalTitle = document.title;
+
+const hiddenTitle = "nohello.at";
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    document.title = hiddenTitle; 
+  } else {
+    document.title = originalTitle; 
+  }
+});
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+        }
+        .content {
+            max-width: 600px;
+            margin: 10%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 1em;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.5;
+        }
+        ul {
+            text-align: left;
+            margin-top: 1em;
+            padding: 0;
+            list-style: none;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5em;
+        }
+        li img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .do {
+            color: green;
+        }
+        .dont {
+            color: red;
+        }
+        .separator {
+            height: 1em;
+            background-color: #e0e0e0;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 id="title">Loading...</h1>
+        <p id="message">Please wait while we determine your language.</p>
+        <div id="dont-section">
+            <h2>Don't</h2>
+            <ul id="dont-examples">
+                <li class="dont"><img src="/images/cross.png" alt="Don't"> Just say "Hello"</li>
+                <li class="dont"><img src="/images/cross.png" alt="Don't"> Send vague messages</li>
+                <li class="dont"><img src="/images/cross.png" alt="Don't"> Start with "Hey" and nothing else</li>
+                <li class="dont"><img src="/images/cross.png" alt="Don't"> Ask to ask a question</li>
+            </ul>
+        </div>
+        <div class="separator"></div>
+        <div id="do-section">
+            <h2>Do</h2>
+            <ul id="do-examples">
+                <li class="do"><img src="/images/check.png" alt="Do"> Provide clear context</li>
+                <li class="do"><img src="/images/check.png" alt="Do"> Get straight to the point</li>
+                <li class="do"><img src="/images/check.png" alt="Do"> Start with a greeting and a question</li>
+                <li class="do"><img src="/images/check.png" alt="Do"> Include necessary details</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        async function loadLanguage() {
+            const language = navigator.language || 'en';
+            const langCode = language.split('-')[0];
+
+            try {
+                const response = await fetch(`/localizations/${langCode}.json`);
+                if (!response.ok) throw new Error('Language file not found');
+
+                const translations = await response.json();
+                document.getElementById('title').textContent = translations.title;
+                document.getElementById('message').textContent = translations.message;
+
+                const dontExamplesList = document.getElementById('dont-examples');
+                const doExamplesList = document.getElementById('do-examples');
+                dontExamplesList.innerHTML = '';
+                doExamplesList.innerHTML = '';
+
+                translations.examples.forEach(example => {
+                    const li = document.createElement('li');
+                    const img = document.createElement('img');
+                    img.src = example.type === 'do' ? '/images/check.png' : '/images/cross.png';
+                    img.alt = example.type === 'do' ? 'Do' : 'Don\'t';
+                    li.appendChild(img);
+                    const text = document.createTextNode(example.text);
+                    li.appendChild(text);
+                    li.className = example.type;
+                    if (example.type === 'do') {
+                        doExamplesList.appendChild(li);
+                    } else {
+                        dontExamplesList.appendChild(li);
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading language file:', error);
+                try {
+                    const fallbackResponse = await fetch('en.json');
+                    if (!fallbackResponse.ok) throw new Error('Fallback language file not found');
+
+                    const fallbackTranslations = await fallbackResponse.json();
+                    document.getElementById('title').textContent = fallbackTranslations.title;
+                    document.getElementById('message').textContent = fallbackTranslations.message;
+
+                    const dontExamplesList = document.getElementById('dont-examples');
+                    const doExamplesList = document.getElementById('do-examples');
+                    dontExamplesList.innerHTML = '';
+                    doExamplesList.innerHTML = '';
+
+                    fallbackTranslations.examples.forEach(example => {
+                        const li = document.createElement('li');
+                        const img = document.createElement('img');
+                        img.src = example.type === 'do' ? '/images/check.png' : '/images/cross.png';
+                        img.alt = example.type === 'do' ? 'Do' : 'Don\'t';
+                        li.appendChild(img);
+                        const text = document.createTextNode(example.text);
+                        li.appendChild(text);
+                        li.className = example.type;
+                        if (example.type === 'do') {
+                            doExamplesList.appendChild(li);
+                        } else {
+                            dontExamplesList.appendChild(li);
+                        }
+                    });
+                } catch (fallbackError) {
+                    console.error('Error loading fallback language file:', fallbackError);
+                    document.getElementById('title').textContent = 'Error';
+                    document.getElementById('message').textContent = 'Unable to load content.';
+                }
+            }
+        }
+
+        loadLanguage();
+    </script>
+    <br>
+        <style>
+.container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+/* Media Query für Mobilgeräte */
+@media (max-width: 768px) {
+        .container {
+            display: none;
+        }
+    }
+    
+
+
+.chatbox {
+    width: 300px;
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.chat-header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+@media (max-width: 768px) {
+        .container {
+            flex-direction: column; 
+            gap: 10px;
+        }
+        .chatbox {
+            width: 90%; 
+            height: auto; 
+        }
+    }
+
+.message {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.message img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.message-content {
+    background-color: #e6e6e6;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 70%;
+}
+
+.message.sent {
+    justify-content: flex-end;
+}
+
+.message.sent .message-content {
+    background-color: #dcf8c6;
+}
+
+.message.sent img {
+    order: 1;
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+.timestamp {
+    font-size: 0.7em;
+    color: #888;
+    margin-top: 2px;
+}
+
+        </style>
+        <div class="container">
+            <div class="chatbox">
+                <div class="chat-header" id="doHeader">Do: Effective Communication</div>
+                <div class="chat-messages" id="doMessages"></div>
+            </div>
+            <div class="chatbox">
+                <div class="chat-header" id="dontHeader">Don't: Ineffective Communication</div>
+                <div class="chat-messages" id="dontMessages"></div>
+            </div>
+        </div>
+    
+        <script>
+            async function loadLocalization(language) {
+                try {
+                    const response = await fetch(`/localizations/${language}.json`);
+                    if (!response.ok) {
+                        throw new Error('Localization file not found');
+                    }
+                    return await response.json();
+                } catch (error) {
+                    console.error('Error loading localization:', error);
+                    
+                    const fallbackResponse = await fetch('/localizations/en.json');
+                    return await fallbackResponse.json();
+                }
+            }
+    
+            function renderMessages(messages, elementId) {
+                const chatMessages = document.getElementById(elementId);
+                chatMessages.innerHTML = '';
+    
+                messages.forEach(msg => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message ${msg.sender === 'user' ? 'sent' : ''}`;
+    
+                    const img = document.createElement('img');
+                    img.src = msg.sender === 'user' ? 'https://cdn.stuffmaker.wtf/u/PpfuwnciF6iM0az.jpg' : 'https://cdn.stuffmaker.wtf/u/capxvnNiBahM8Zs.jpg';
+                    img.alt = msg.sender === 'user' ? 'User' : 'Alice';
+    
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'message-content';
+                    contentDiv.textContent = msg.message;
+    
+                    const timestampDiv = document.createElement('div');
+                    timestampDiv.className = 'timestamp';
+                    timestampDiv.textContent = msg.time;
+    
+                    contentDiv.appendChild(timestampDiv);
+                    messageDiv.appendChild(img);
+                    messageDiv.appendChild(contentDiv);
+                    chatMessages.appendChild(messageDiv);
+                });
+            }
+    
+            async function initializeChatboxes() {
+                const userLanguage = navigator.language || 'en';
+                const localization = await loadLocalization(userLanguage);
+    
+                document.getElementById('doHeader').textContent = localization.doHeader;
+                document.getElementById('dontHeader').textContent = localization.dontHeader;
+    
+                renderMessages(localization.doExample, 'doMessages');
+                renderMessages(localization.dontExample, 'dontMessages');
+            }
+    
+            initializeChatboxes();
+        </script>
+
+</body>
+</html>
