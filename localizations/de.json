@@ -22,6 +22,6 @@
         { "sender": "alice", "message": "Hi", "time": "10:05 AM" },
         { "sender": "user", "message": "Hast du kurz zeit?", "time": "10:06 AM" },
         { "sender": "alice", "message": "Ja, ich habe gerade Zeit.", "time": "10:07 AM" },
-        { "sender": "user", "message": "Super, kannst du mir bitte helfen, mit meinem Deployment-Probleme?", "time": "10:08 AM" }
+        { "sender": "user", "message": "Super, kannst du mir bitte helfen, mit meinem Deployment-Problem?", "time": "10:08 AM" }
     ]
 }
